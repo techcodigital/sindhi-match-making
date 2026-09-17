@@ -1,3 +1,78 @@
 'use client';
-import Link from 'next/link'; import Image from 'next/image'; import { BadgeCheck, Heart, MapPin } from 'lucide-react'; import { motion } from 'framer-motion'; import type { Profile } from '@/types'; import { useAppStore } from '@/store/use-app-store';
-export function ProfileCard({ profile }: { profile:Profile }) { const { favouriteIds,toggleFavourite }=useAppStore(); const fav=favouriteIds.includes(profile.id); return <motion.article initial={{ opacity:0, y:12 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }} transition={{ duration:.35 }} whileHover={{ y:-4 }} className="card group overflow-hidden"><div className="relative aspect-[1/.78] overflow-hidden"><Image src={profile.image} alt={profile.name} fill className="object-cover transition duration-500 group-hover:scale-105"/><button onClick={()=>toggleFavourite(profile.id)} className="absolute right-3 top-3 grid h-10 w-10 place-items-center rounded-full bg-white/90 text-green-700" aria-label="Favourite"><Heart size={18} fill={fav?'currentColor':'none'}/></button></div><div className="p-4"><div className="flex items-center gap-1 font-bold">{profile.name}, {profile.age}{profile.verified&&<BadgeCheck size={16} className="text-green-600"/>}</div><p className="mt-1 text-sm text-slate-500">{profile.occupation} · {profile.education}</p><p className="mt-2 flex items-center gap-1 text-xs font-semibold text-slate-500"><MapPin size={14}/>{profile.city}</p><Link href={`/profile/${profile.id}`} className="mt-4 block rounded-lg bg-green-50 py-2 text-center text-sm font-bold text-green-700 transition hover:bg-green-100">View profile</Link></div></motion.article> }
+
+import Image from 'next/image';
+import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { ArrowUpRight, BadgeCheck, Heart, MapPin } from 'lucide-react';
+import type { Profile } from '@/types';
+import { useAppStore } from '@/store/use-app-store';
+import { cn } from '@/utils/cn';
+
+export function ProfileCard({ profile }: { profile: Profile }) {
+  const { favouriteIds, toggleFavourite } = useAppStore();
+  const fav = favouriteIds.includes(profile.id);
+
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      className="group overflow-hidden rounded-[1.75rem] bg-white shadow-soft ring-1 ring-green-950/[0.06] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lift"
+    >
+      <div className="relative aspect-[4/5] overflow-hidden">
+        <Image
+          src={profile.image}
+          alt={profile.name}
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+          className="object-cover transition-transform duration-700 group-hover:scale-105"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-green-950/70 via-green-950/0 to-green-950/10" />
+
+        {profile.verified && (
+          <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-extrabold uppercase tracking-wide text-green-800 backdrop-blur">
+            <BadgeCheck size={13} />
+            Verified
+          </span>
+        )}
+
+        <motion.button
+          whileTap={{ scale: 0.75 }}
+          onClick={() => toggleFavourite(profile.id)}
+          aria-label="Save to favourites"
+          className={cn(
+            'absolute right-3 top-3 grid h-10 w-10 place-items-center rounded-full backdrop-blur transition',
+            fav
+              ? 'bg-rose-500 text-white shadow-lg shadow-rose-500/40'
+              : 'bg-white/90 text-green-900 hover:bg-white',
+          )}
+        >
+          <Heart size={18} fill={fav ? 'currentColor' : 'none'} />
+        </motion.button>
+
+        <div className="absolute inset-x-0 bottom-0 p-4 text-white">
+          <p className="font-display text-[22px] font-bold leading-tight">
+            {profile.name}, {profile.age}
+          </p>
+          <p className="mt-1 flex items-center gap-1 text-[13px] font-medium text-white/85">
+            <MapPin size={13} />
+            {profile.city} · {profile.height}
+          </p>
+        </div>
+      </div>
+
+      <div className="p-4">
+        <p className="truncate text-sm font-semibold text-slate-600">{profile.occupation}</p>
+        <p className="truncate text-[13px] text-slate-400">{profile.education}</p>
+        <Link
+          href={`/profile/${profile.id}`}
+          className="mt-3 flex items-center justify-center gap-1.5 rounded-xl bg-green-700/[0.07] py-2.5 text-sm font-bold text-green-900 ring-1 ring-inset ring-green-700/10 transition hover:bg-green-700 hover:text-white hover:ring-green-700"
+        >
+          View profile
+          <ArrowUpRight size={16} />
+        </Link>
+      </div>
+    </motion.article>
+  );
+}
