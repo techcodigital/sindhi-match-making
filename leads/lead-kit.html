@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Website Dev Lead Kit — Sindhi Match Making</title>
+<style>
+  :root{
+    --bg:#0b0f16; --panel:#111827; --panel2:#0e1521; --line:#1f2b3d;
+    --txt:#e8eef7; --muted:#8b9bb4; --accent:#38e07b; --accent2:#4f8cff;
+    --hot:#ff6b5b; --warm:#ffb020; --cold:#5b6b82;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:radial-gradient(1200px 600px at 80% -10%,#12243a 0%,var(--bg) 60%);color:var(--txt);
+    font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Inter,Arial,sans-serif;line-height:1.55}
+  a{color:var(--accent2);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:1120px;margin:0 auto;padding:28px 20px 80px}
+  header.hero{border:1px solid var(--line);background:linear-gradient(160deg,#101a2b,#0c121c);border-radius:18px;padding:26px 24px;margin-bottom:18px}
+  h1{font-size:26px;margin:0 0 6px;letter-spacing:-.4px}
+  h1 span{color:var(--accent)}
+  .sub{color:var(--muted);font-size:14px;margin:0}
+  .badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  .badge{font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:5px 10px;background:#0b1320}
+  nav{position:sticky;top:0;z-index:20;display:flex;gap:6px;flex-wrap:wrap;padding:10px 0;margin-bottom:10px;
+    backdrop-filter:blur(10px);background:rgba(11,15,22,.82)}
+  nav a{font-size:13px;color:var(--muted);border:1px solid var(--line);border-radius:10px;padding:7px 11px;background:#0d1522}
+  nav a:hover{color:var(--txt);border-color:#2b3d57;text-decoration:none}
+  section{margin-top:26px}
+  h2{font-size:18px;margin:0 0 4px;letter-spacing:-.2px}
+  h2 .n{display:inline-flex;width:24px;height:24px;border-radius:7px;background:#16233a;color:var(--accent);
+    align-items:center;justify-content:center;font-size:12px;margin-right:8px;border:1px solid #23344e}
+  .lead{color:var(--muted);font-size:13.5px;margin:0 0 14px;max-width:760px}
+  .grid{display:grid;gap:12px}
+  .g2{grid-template-columns:repeat(auto-fit,minmax(290px,1fr))}
+  .g3{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+  .card{border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:16px}
+  .card h3{margin:0 0 6px;font-size:15px;display:flex;align-items:center;gap:8px;justify-content:space-between}
+  .card p{margin:0 0 10px;color:var(--muted);font-size:13px}
+  .tag{font-size:10.5px;padding:3px 8px;border-radius:999px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;white-space:nowrap}
+  .t-hot{background:rgba(255,107,91,.14);color:var(--hot);border:1px solid rgba(255,107,91,.35)}
+  .t-warm{background:rgba(255,176,32,.13);color:var(--warm);border:1px solid rgba(255,176,32,.33)}
+  .t-skip{background:rgba(91,107,130,.16);color:#9bb0cc;border:1px solid #2b3d57}
+  .t-new{background:rgba(56,224,123,.12);color:var(--accent);border:1px solid rgba(56,224,123,.33)}
+  .qrow{display:flex;gap:8px;align-items:flex-start;justify-content:space-between;border-top:1px dashed #1e2a3c;padding:9px 0}
+  .qrow:first-of-type{border-top:0}
+  .q{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:#bcd0ea;word-break:break-word}
+  button.copy{cursor:pointer;border:1px solid #2b3d57;background:#132033;color:#a8c0e0;border-radius:8px;
+    font-size:11px;padding:5px 9px;flex:0 0 auto}
+  button.copy:hover{border-color:var(--accent2);color:#fff}
+  button.copy.done{background:rgba(56,224,123,.16);border-color:rgba(56,224,123,.5);color:var(--accent)}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--muted);font-weight:600;font-size:11.5px;text-transform:uppercase;letter-spacing:.4px}
+  tr:hover td{background:#0e1725}
+  .scroll{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--panel)}
+  .script{border:1px solid var(--line);background:var(--panel2);border-radius:12px;padding:14px;margin-bottom:10px}
+  .script .top{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:8px}
+  .script .top b{font-size:13px}
+  .script pre{margin:0;white-space:pre-wrap;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.3px;color:#c8d8ee;line-height:1.6}
+  .plan{display:grid;gap:8px}
+  .plan .row{display:grid;grid-template-columns:96px 1fr;gap:12px;border:1px solid var(--line);border-radius:11px;padding:10px 12px;background:var(--panel2)}
+  .plan .time{color:var(--accent);font-size:12px;font-weight:700}
+  .plan .what{font-size:13px;color:#cbd8ea}
+  .plan .what small{display:block;color:var(--muted)}
+  .calc{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--panel)}
+  .calc .body{padding:16px;display:grid;gap:9px}
+  .calc label{display:flex;gap:9px;align-items:flex-start;font-size:13px;color:#cbd8ea;cursor:pointer}
+  .calc input{accent-color:var(--accent);margin-top:3px}
+  .score{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#0c1421;border-top:1px solid var(--line);padding:14px 16px}
+  .score .val{font-size:26px;font-weight:800;letter-spacing:-1px}
+  .score .verdict{font-size:13px;color:var(--muted);text-align:right}
+  .callout{border-left:3px solid var(--accent);background:#0d1a16;border-radius:0 12px 12px 0;padding:12px 14px;font-size:13px;color:#c7e6d5;margin:12px 0}
+  .callout.warn{border-color:var(--warm);background:#1a1607;color:#f0dfb6}
+  footer{margin-top:40px;border-top:1px solid var(--line);padding-top:16px;color:var(--muted);font-size:12px}
+  .kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:16px}
+  .kpi div{border:1px solid var(--line);border-radius:12px;padding:12px;background:#0c1421}
+  .kpi b{display:block;font-size:20px;color:#fff}
+  .kpi span{font-size:11.5px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <h1>Website Development <span>Lead Kit</span></h1>
+    <p class="sub">Roz naye "website chahiye" waale clients dhoondhne ka system — LinkedIn, Facebook, Google, marketplaces aur local businesses. Banaya: 21 Oct 2026.</p>
+    <div class="badges">
+      <span class="badge">🔎 20+ ready search links</span>
+      <span class="badge">🔥 8 live leads</span>
+      <span class="badge">💬 Hinglish scripts</span>
+      <span class="badge">📊 Lead scorer</span>
+      <span class="badge">🗂️ CSV tracker</span>
+    </div>
+    <div class="kpi">
+      <div><b>426</b><span>open website-design projects (Freelancer)</span></div>
+      <div><b>339</b><span>bids on a single ₹12.5k project → avoid</span></div>
+      <div><b>4</b><span>bids on the project you should bid today</span></div>
+      <div><b>2 hrs</b><span>daily routine = 25 conversations/week</span></div>
+    </div>
+  </header>
+
+  <nav>
+    <a href="#reality">Sach</a>
+    <a href="#leads">Live leads</a>
+    <a href="#search">Search links</a>
+    <a href="#nowebsite">No-website leads</a>
+    <a href="#plan">Daily plan</a>
+    <a href="#scripts">Scripts</a>
+    <a href="#score">Scorer</a>
+    <a href="#price">Pricing</a>
+    <a href="#flags">Red flags</a>
+  </nav>
+
+  <!-- 1 -->
+  <section id="reality">
+    <h2><span class="n">1</span>Sach pehle: kahan se paisa aata hai</h2>
+    <p class="lead">Marketplace = volume, low price, zyada competition. Social posts = garam leads par login-gated. Local businesses = zero competition, sabse zyada price. Teeno ko mix karo, ek par depend mat karo.</p>
+    <div class="grid g3">
+      <div class="card">
+        <h3>Marketplace <span class="tag t-warm">volume</span></h3>
+        <p>Freelancer / Truelancer / Upwork. Clients ready hote hain, par 100–300 bids. Yahan se <b>proof aur reviews</b> lo, paisa nahi.</p>
+      </div>
+      <div class="card">
+        <h3>Social posts <span class="tag t-hot">hot</span></h3>
+        <p>LinkedIn, Facebook, X. Client khud "chahiye" likhta hai. Pehle 30 minute mein reply = 3x zyada reply rate.</p>
+      </div>
+      <div class="card">
+        <h3>No-website business <span class="tag t-new">best</span></h3>
+        <p>Google Maps / Instagram. Client ne kabhi post hi nahi daala. Competition zero, poori price milti hai.</p>
+      </div>
+    </div>
+    <div class="callout"><b>Rule:</b> din ke 2 ghante = 40 min marketplace + 40 min social + 40 min direct outreach. 30 din mein 3–5 paying clients, agar follow-up chhoda nahi.</div>
+  </section>
+
+  <!-- 2 -->
+  <section id="leads">
+    <h2><span class="n">2</span>Aaj ke live leads (21 Oct 2026)</h2>
+    <p class="lead">Ye projects abhi public listings par hain. Bid se pehle link kholke status confirm karo — kuch band ho chuke ho sakte hain.</p>
+    <div class="grid g2">
+
+      <div class="card">
+        <h3>“I need a website” — Jamshedpur <span class="tag t-hot">bid now</span></h3>
+        <p>Professional, mobile-friendly business website. <b>Sirf 4 proposals</b> — aaj ka sabse best win chance.</p>
+        <p style="color:#cbd8ea">₹1,500–12,500 · Freelancer · <a href="https://www.freelancer.com/projects/website-development/need-website" target="_blank" rel="noopener">Project kholo ↗</a></p>
+      </div>
+
+      <div class="card">
+        <h3>E-commerce — Patna <span class="tag t-hot">bid now</span></h3>
+        <p>Hinglish brief, filters + reviews + UPI. Client Oct 2026 mein join hua — abhi koi agency nahi hai.</p>
+        <p style="color:#cbd8ea">₹1,500–12,500 · Freelancer · <a href="https://www.freelancer.com/projects/web-design/commerce-Website-Design-Needed-40761916" target="_blank" rel="noopener">Project kholo ↗</a></p>
+      </div>
+
+      <div class="card">
+        <h3>Furniture website — Pune <span class="tag t-hot">bid now</span></h3>
+        <p>Poora scope client ne khud Hindi mein likha: categories, search, CMS, UPI, WhatsApp. Serious buyer.</p>
+        <p style="color:#cbd8ea">₹1,500–12,500 · Freelancer · <a href="https://www.freelancer.com/projects/web-design/Furniture-website-banwani-hai-punekar" target="_blank" rel="noopener">Project kholo ↗</a></p>
+      </div>
+
+      <div class="card">
+        <h3>Coaching institute site <span class="tag t-warm">portfolio</span></h3>
+        <p>Batch, results, fee payment, lead form. Budget chhota — sirf template delivery, testimonial ke liye lo.</p>
+        <p style="color:#cbd8ea">₹2,000–5,000 · Freelancer · <a href="https://www.freelancer.com/projects/web-development/coaching-class-website-build" target="_blank" rel="noopener">Project kholo ↗</a></p>
+      </div>
+
+      <div class="card">
+        <h3>Blog template (front-end only) <span class="tag t-warm">quick</span></h3>
+        <p>Design + responsive layout, backend nahi. 2 din ka kaam, 5-star review ke liye achha.</p>
+        <p style="color:#cbd8ea">~$26 avg · 31 bids · <a href="https://www.freelancer.com/projects/blog-website-template-design-fix" target="_blank" rel="noopener">Project kholo ↗</a></p>
+      </div>
+
+      <div class="card">
+        <h3>Shopify blog upgrade (contest) <span class="tag t-warm">maybe</span></h3>
+        <p>$41 guaranteed, 50 entries. Shopify aata hai toh hi time do, warna skip.</p>
+        <p style="color:#cbd8ea">$41 · Freelancer contest · <a href="https://www.freelancer.com/contest/shopify-blog-feature-upgrade-2797158" target="_blank" rel="noopener">Contest kholo ↗</a></p>
+      </div>
+    </div>
+
+    <h2 style="font-size:15px;margin-top:22px">Mat bido — time barbaad</h2>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Project</th><th>Bids</th><th>Kyun skip</th></tr></thead>
+        <tbody>
+          <tr><td><a href="https://www.freelancer.com/projects/wordpress-design/wordpress-content-image-refresh" target="_blank" rel="noopener">WordPress content refresh — $150</a></td><td><b style="color:var(--hot)">339</b></td><td>Top 3 mein aana impossible, kaam bhi chhota.</td></tr>
+          <tr><td><a href="https://www.freelancer.com/projects/web-design/modern-crypto-token-landing-page" target="_blank" rel="noopener">Crypto landing page — $16/hr avg</a></td><td><b style="color:var(--hot)">166</b></td><td>Premium kaam, bhikhari rate.</td></tr>
+          <tr><td><a href="https://www.freelancer.com/projects/seo/html-css-javascript-lead-generation" target="_blank" rel="noopener">Healthcare lead-gen page — $95</a></td><td><b style="color:var(--hot)">96</b></td><td>Healthcare portfolio maanga hai, aur 96 log already.</td></tr>
+          <tr><td><a href="https://www.freelancer.com/projects/content-management-system/monthly-website-content-maintenance" target="_blank" rel="noopener">Monthly maintenance — $102</a></td><td><b style="color:var(--hot)">93</b></td><td>Retainer ke naam pe ₹8,000 ka mahina bhar kaam.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout warn"><b>Bid price rule:</b> average bid ka 70–80% rakho aur pehle 10 bidders mein raho. Sabse sasta mat bano — naye clients sasta dekhkar quality doubt karte hain.</div>
+  </section>
+
+  <!-- 3 -->
+  <section id="search">
+    <h2><span class="n">3</span>Roz ke fresh posts — copy-paste search</h2>
+    <p class="lead">Copy button dabao, browser mein paste karo. Login aapka lagega, isliye results fresh aur personal aayenge. Roz subah 15 minute.</p>
+
+    <div class="card" style="margin-bottom:12px">
+      <h3>LinkedIn — content search (last week)</h3>
+      <div class="qrow"><span class="q">"website chahiye"</span><button class="copy" data-v='https://www.linkedin.com/search/results/content/?keywords=%22website%20chahiye%22&datePosted=%22past-week%22&sortBy=%22date_posted%22'>Copy link</button></div>
+      <div class="qrow"><span class="q">"website banwani"</span><button class="copy" data-v='https://www.linkedin.com/search/results/content/?keywords=%22website%20banwani%22&datePosted=%22past-month%22&sortBy=%22date_posted%22'>Copy link</button></div>
+      <div class="qrow"><span class="q">"need a website"</span><button class="copy" data-v='https://www.linkedin.com/search/results/content/?keywords=%22need%20a%20website%22&datePosted=%22past-week%22&sortBy=%22date_posted%22'>Copy link</button></div>
+      <div class="qrow"><span class="q">"looking for a web developer"</span><button class="copy" data-v='https://www.linkedin.com/search/results/content/?keywords=%22looking%20for%20a%20web%20developer%22&datePosted=%22past-week%22&sortBy=%22date_posted%22'>Copy link</button></div>
+      <div class="qrow"><span class="q">"website redesign"</span><button class="copy" data-v='https://www.linkedin.com/search/results/content/?keywords=%22website%20redesign%22&datePosted=%22past-week%22&sortBy=%22date_posted%22'>Copy link</button></div>
+      <div class="qrow"><span class="q">"hiring web developer"</span><button class="copy" data-v='https://www.linkedin.com/search/results/content/?keywords=%22hiring%20web%20developer%22&datePosted=%22past-week%22&sortBy=%22date_posted%22'>Copy link</button></div>
+      <p style="margin-top:10px;font-size:12px">Roz ke keywords: <code>website chahiye</code> · <code>website banwana</code> · <code>web developer chahiye</code> · <code>landing page chahiye</code> · <code>matrimonial website</code> · <code>community website</code></p>
+    </div>
+
+    <div class="grid g2">
+      <div class="card">
+        <h3>Facebook — posts & groups</h3>
+        <div class="qrow"><span class="q">website chahiye</span><button class="copy" data-v='https://www.facebook.com/search/posts/?q=website%20chahiye'>Copy</button></div>
+        <div class="qrow"><span class="q">website banwana hai</span><button class="copy" data-v='https://www.facebook.com/search/posts/?q=website%20banwana%20hai'>Copy</button></div>
+        <div class="qrow"><span class="q">Indore business groups</span><button class="copy" data-v='https://www.facebook.com/search/groups/?q=indore%20business'>Copy</button></div>
+        <div class="qrow"><span class="q">Indore entrepreneurs</span><button class="copy" data-v='https://www.facebook.com/search/groups/?q=indore%20entrepreneurs'>Copy</button></div>
+        <p style="margin-top:8px">Join karo: Indore Business Network · Indore Entrepreneurs · MP Business · Startup India · Sindhi Community · Sindhi Business Network. <b>7 din sirf comment/help, apni service ka post nahi.</b></p>
+      </div>
+
+      <div class="card">
+        <h3>Google — site + freshness</h3>
+        <div class="qrow"><span class="q">LinkedIn posts: "website chahiye"</span><button class="copy" data-v='https://www.google.com/search?q=site%3Alinkedin.com%2Fposts+%22website+chahiye%22&tbs=qdr:w'>Copy</button></div>
+        <div class="qrow"><span class="q">LinkedIn: "need a website" India</span><button class="copy" data-v='https://www.google.com/search?q=site%3Alinkedin.com%2Fposts+%22need+a+website%22+India&tbs=qdr:w'>Copy</button></div>
+        <div class="qrow"><span class="q">Facebook groups: website chahiye</span><button class="copy" data-v='https://www.google.com/search?q=site%3Afacebook.com%2Fgroups+%22website%22+%22chahiye%22&tbs=qdr:w'>Copy</button></div>
+        <div class="qrow"><span class="q">Instagram: Indore businesses</span><button class="copy" data-v='https://www.google.com/search?q=site%3Ainstagram.com+%22indore%22+%22dm+for+orders%22&tbs=qdr:w'>Copy</button></div>
+        <p style="margin-top:8px">Google mein <b>Tools → Past 24 hours</b> set karna mat bhoolo (<code>&amp;tbs=qdr:d</code>).</p>
+      </div>
+
+      <div class="card">
+        <h3>X / Twitter</h3>
+        <div class="qrow"><span class="q">"need a website" (live)</span><button class="copy" data-v='https://x.com/search?q=%22need%20a%20website%22%20-hiring&f=live'>Copy</button></div>
+        <div class="qrow"><span class="q">"website chahiye"</span><button class="copy" data-v='https://x.com/search?q=%22website%20chahiye%22&f=live'>Copy</button></div>
+        <div class="qrow"><span class="q">"looking for a web developer"</span><button class="copy" data-v='https://x.com/search?q=%22looking%20for%20a%20web%20developer%22%20-hiring&f=live'>Copy</button></div>
+        <p style="margin-top:8px">Indian founders yahan "DM me" likhte hain. Reply public karo, phir DM — sirf DM spam ban ho jaata hai.</p>
+      </div>
+
+      <div class="card">
+        <h3>Reddit + other platforms</h3>
+        <div class="qrow"><span class="q">r/forhire — [Hiring] posts</span><button class="copy" data-v='https://www.reddit.com/r/forhire/new/'>Copy</button></div>
+        <div class="qrow"><span class="q">r/FreelanceIndia</span><button class="copy" data-v='https://www.reddit.com/r/FreelanceIndia/new/'>Copy</button></div>
+        <div class="qrow"><span class="q">r/developersIndia</span><button class="copy" data-v='https://www.reddit.com/r/developersIndia/new/'>Copy</button></div>
+        <div class="qrow"><span class="q">Truelancer — website dev</span><button class="copy" data-v='https://www.truelancer.com/website-development-freelancers'>Copy</button></div>
+        <p style="margin-top:8px">Truelancer par Indian clients aur 8–10% fee — Freelancer se kam competition.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section id="nowebsite">
+    <h2><span class="n">4</span>Sabse zyada converting: jinke paas website hi nahi</h2>
+    <p class="lead">Post daalne waale ka budget already ghisa hua hai. Jiske paas website nahi hai, wo poori price deta hai. Indore mein aapke aas-paas hazaron aise businesses hain.</p>
+
+    <div class="grid g2">
+      <div class="card">
+        <h3>Google Maps method — 20 min, 15 leads</h3>
+        <p>1. Maps → <code>dentist in Indore</code><br>
+           2. Har listing kholo — jiske paas <b>"Website" button nahi</b> hai = HOT lead<br>
+           3. Phone + photos se verify karo business real hai<br>
+           4. CSV mein naam, phone, area, reviews daalo<br>
+           5. 10 businesses → ~4 call connect → 1 meeting</p>
+        <button class="copy" data-v='https://www.google.com/maps/search/dentist+in+indore'>Copy Maps search</button>
+      </div>
+
+      <div class="card">
+        <h3>Instagram-only brand method</h3>
+        <p>Search: <code>#indorecafe</code> <code>#indoreboutique</code> <code>#indorebakery</code> <code>#indoreinteriors</code> <code>#indorephotographer</code></p>
+        <p>Bio link dekho:<br>
+           • sirf <code>wa.me</code> → website nahi = <b>lead</b><br>
+           • <code>linktr.ee</code> → website nahi = <b>lead</b><br>
+           • site hai par mobile pe tooti → <b>redesign lead</b></p>
+      </div>
+
+      <div class="card">
+        <h3>Purani website = fast money (redesign)</h3>
+        <p>Site phone pe kholo. 3 second mein load na ho, text chhota ho, ya footer mein "© 2019" ho → redesign pitch.</p>
+        <p><a href="https://pagespeed.web.dev" target="_blank" rel="noopener">PageSpeed Insights</a> ka score screenshot bhejo: <b>"Aapki site 34/100 hai, customers ja rahe hain."</b> Sabse zyada reply laane wali line.</p>
+      </div>
+
+      <div class="card">
+        <h3>Best Indore niches (budget hai, website nahi)</h3>
+        <p>Dentists/skin clinics · coaching institutes · banquet halls · wedding planners · interior designers · gyms · jewellers · boutiques · CA/advocates · property dealers · cafés.</p>
+        <p><b>Package:</b> ₹15k–50k, 7–10 din. Har niche ke liye ek demo site banao — wahi aapka best salesperson hai.</p>
+      </div>
+    </div>
+
+    <div class="callout"><b>Aapka unfair advantage:</b> repo mein ek <b>working matrimonial platform</b> hai. Isko product banao — marriage bureaus, Sindhi panchayat/associations, community temples, banquet halls. Ye audience trust pe chalti hai: ek reference = 5 aur clients. Indore ke alawa Bhopal, Jaipur, Surat, Ahmedabad, Ulhasnagar, Pune.</div>
+  </section>
+
+  <!-- 5 -->
+  <section id="plan">
+    <h2><span class="n">5</span>Roz ka 2-ghante plan</h2>
+    <p class="lead">Same time, same order, har din. Isse momentum banta hai aur pipeline kabhi khaali nahi hota.</p>
+    <div class="plan">
+      <div class="row"><div class="time">0–15 min</div><div class="what">LinkedIn 6 searches → 5 posts pe comment + 5 DM<small>Output: 5 conversations</small></div></div>
+      <div class="row"><div class="time">15–35 min</div><div class="what">Facebook 3 groups + city group → 2 comments, 1 helpful post<small>Output: 2–3 conversations</small></div></div>
+      <div class="row"><div class="time">35–50 min</div><div class="what">Freelancer/Truelancer newest → 3 best projects pe bid<small>Output: 3 bids</small></div></div>
+      <div class="row"><div class="time">50–80 min</div><div class="what">Google Maps / Instagram → 10 no-website businesses list<small>Output: 10 HOT leads</small></div></div>
+      <div class="row"><div class="time">80–100 min</div><div class="what">10 calls + 10 WhatsApp (no-website waale)<small>Output: 2–4 interested</small></div></div>
+      <div class="row"><div class="time">100–120 min</div><div class="what">Follow-up: 3 din purane saare leads + tracker update<small>Output: pipeline clean</small></div></div>
+    </div>
+    <div class="callout"><b>Hafte ka target:</b> 25 conversations · 5 meetings · 1–2 deals. Follow-up na karo toh aadha pipeline mar jaata hai — 60% deals day-3/day-7 follow-up se banti hain.</div>
+  </section>
+
+  <!-- 6 -->
+  <section id="scripts">
+    <h2><span class="n">6</span>Outreach scripts (copy-paste)</h2>
+    <p class="lead">Rule: pehle value do, phir offer. "Main freelancer hoon, kya aapko website chahiye?" — ye line 95% ignore hoti hai.</p>
+
+    <div class="script">
+      <div class="top"><b>LinkedIn — comment (post ke 5 min andar)</b><button class="copy" data-v='Sir, isme ek cheez add karni chahiye — Google par "near me" search mein aane ke liye location + service pages. Maine similar business ke liye banaya tha, wahan enquiries 2x hui thi. All the best!'>Copy</button></div>
+      <pre>Sir, isme ek cheez add karni chahiye — Google par "near me" search mein aane ke liye location + service pages. Maine similar business ke liye banaya tha, wahan enquiries 2x hui thi. All the best!</pre>
+    </div>
+
+    <div class="script">
+      <div class="top"><b>LinkedIn — DM (comment ke 10 min baad)</b><button class="copy" data-v='Hi [Name], aapke post pe comment kiya tha. Main Indore se hoon, websites banata hoon — mainly clinics, coaching aur local business ke liye (booking form + WhatsApp + Google par ranking).
+
+Aapke liye ek chhota kaam free mein kar sakta hoon: 1-page layout mockup, aapke business ke naam se. 2 din mein bhej dunga. Agar pasand aaye toh aage baat karenge, warna wo bhi aapka.
+
+Interested?'>Copy</button></div>
+      <pre>Hi [Name], aapke post pe comment kiya tha. Main Indore se hoon, websites banata hoon — mainly clinics, coaching aur local business ke liye (booking form + WhatsApp + Google par ranking).
+
+Aapke liye ek chhota kaam free mein kar sakta hoon: 1-page layout mockup, aapke business ke naam se. 2 din mein bhej dunga. Agar pasand aaye toh aage baat karenge, warna wo bhi aapka.
+
+Interested?</pre>
+    </div>
+
+    <div class="script">
+      <div class="top"><b>WhatsApp — no-website business</b><button class="copy" data-v='Namaste [Name] ji, main [aapka naam], Indore se. Aapka [business] Google Maps par dekha — reviews achhe hain par website nahi hai, isliye jab koi "[service] near me" search karta hai toh aap list mein nahi aate.
+
+Main [niche] ke liye website banata hoon — enquiry form, WhatsApp button, Google par dikhna. 7 din mein ready, ₹[X] se shuru. Meri ek sample site: [link]
+
+5 minute baat kar sakte hain? Ya main aapko 2 sample bhej doon?'>Copy</button></div>
+      <pre>Namaste [Name] ji, main [aapka naam], Indore se. Aapka [business] Google Maps par dekha — reviews achhe hain par website nahi hai, isliye jab koi "[service] near me" search karta hai toh aap list mein nahi aate.
+
+Main [niche] ke liye website banata hoon — enquiry form, WhatsApp button, Google par dikhna. 7 din mein ready, ₹[X] se shuru. Meri ek sample site: [link]
+
+5 minute baat kar sakte hain? Ya main aapko 2 sample bhej doon?</pre>
+    </div>
+
+    <div class="script">
+      <div class="top"><b>Cold call — 30 second</b><button class="copy" data-v='Namaste, main [naam] bol raha hoon, Indore se. Aapke [business] ki website nahi hai na? ... Main isi kaam ke liye call kar raha hoon. Aapke jaise [niche] ke liye main website banata hoon jo Google par aata hai aur WhatsApp enquiry deta hai. 7 din mein ban jaati hai.
+
+Main aaj aapko WhatsApp par 2 sample bhej deta hoon, aap dekh lijiye. Aapka WhatsApp isi number par hai?'>Copy</button></div>
+      <pre>Namaste, main [naam] bol raha hoon, Indore se. Aapke [business] ki website nahi hai na? ... Main isi kaam ke liye call kar raha hoon. Aapke jaise [niche] ke liye main website banata hoon jo Google par aata hai aur WhatsApp enquiry deta hai. 7 din mein ban jaati hai.
+
+Main aaj aapko WhatsApp par 2 sample bhej deta hoon, aap dekh lijiye. Aapka WhatsApp isi number par hai?</pre>
+    </div>
+
+    <div class="script">
+      <div class="top"><b>Freelancer.com proposal (Hinglish)</b><button class="copy" data-v='Namaste [Name], brief poora padha.
+
+Aapko chahiye: [3 points unke brief se copy karo].
+
+Main [X] saal se websites banata hoon, aapke jaisa [niche] ka kaam kiya hai: [1 link].
+
+Plan: Day 1-2 design, Day 3-5 development, Day 6 testing, Day 7 handover + 1 video jisme main aapko sikhata hoon ki content khud kaise badalna hai.
+
+₹[X] fixed, 7 din, 2 revision free. Domain-hosting aapke naam par hoga.
+
+Ek chhoti si baat — aapke brief mein [ek genuine observation] clear nahi tha. Bata dijiye toh main aaj hi shuru kar sakta hoon.'>Copy</button></div>
+      <pre>Namaste [Name], brief poora padha.
+
+Aapko chahiye: [3 points unke brief se copy karo].
+
+Main [X] saal se websites banata hoon, aapke jaisa [niche] ka kaam kiya hai: [1 link].
+
+Plan: Day 1-2 design, Day 3-5 development, Day 6 testing, Day 7 handover + 1 video jisme main aapko sikhata hoon ki content khud kaise badalna hai.
+
+₹[X] fixed, 7 din, 2 revision free. Domain-hosting aapke naam par hoga.
+
+Ek chhoti si baat — aapke brief mein [ek genuine observation] clear nahi tha. Bata dijiye toh main aaj hi shuru kar sakta hoon.</pre>
+    </div>
+
+    <div class="script">
+      <div class="top"><b>Instagram DM</b><button class="copy" data-v='Hi! Aapka [product] bahut achha lag raha hai. Ek cheez notice ki — bio mein sirf WhatsApp link hai, website nahi. Isse Google par aapki shop nahi aati, sirf Instagram followers tak pahunchti hai.
+
+Main aise brands ke liye chhoti website banata hoon — catalogue + WhatsApp order + Google Maps. 5 din, ₹[X]. Sample bhejun?'>Copy</button></div>
+      <pre>Hi! Aapka [product] bahut achha lag raha hai. Ek cheez notice ki — bio mein sirf WhatsApp link hai, website nahi. Isse Google par aapki shop nahi aati, sirf Instagram followers tak pahunchti hai.
+
+Main aise brands ke liye chhoti website banata hoon — catalogue + WhatsApp order + Google Maps. 5 din, ₹[X]. Sample bhejun?</pre>
+    </div>
+
+    <div class="script">
+      <div class="top"><b>Follow-up — day 3 & day 7</b><button class="copy" data-v='Day 3: "[Name] ji, kal wala sample bhej raha hoon — [1 line]. Dekh lijiye, koi pressure nahi."
+
+Day 7: "[Name] ji, main is week 2 hi project le raha hoon, isliye pooch raha hoon. Aapke liye slot rakhu ya hold kar doon?"'>Copy</button></div>
+      <pre>Day 3: "[Name] ji, kal wala sample bhej raha hoon — [1 line]. Dekh lijiye, koi pressure nahi."
+
+Day 7: "[Name] ji, main is week 2 hi project le raha hoon, isliye pooch raha hoon. Aapke liye slot rakhu ya hold kar doon?"</pre>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section id="score">
+    <h2><span class="n">7</span>Lead score — 10 second mein decide karo</h2>
+    <p class="lead">Har lead pe tick karo. Score khud batayega: aaj call karo, ya chhod do.</p>
+    <div class="calc">
+      <div class="body" id="calcBody">
+        <label><input type="checkbox" data-points="3"> Khud "chahiye" likha hai (+3)</label>
+        <label><input type="checkbox" data-points="2"> Business real hai — naam/address public (+2)</label>
+        <label><input type="checkbox" data-points="2"> Website nahi hai ya kharab hai (+2)</label>
+        <label><input type="checkbox" data-points="2"> Recent posts / active Instagram — paisa chal raha hai (+2)</label>
+        <label><input type="checkbox" data-points="2"> Phone number diya hua hai (+2)</label>
+        <label><input type="checkbox" data-points="1"> Budget mention hai (+1)</label>
+        <label><input type="checkbox" data-points="-3"> 100+ bids / "free demo chahiye" (−3)</label>
+        <label><input type="checkbox" data-points="-5"> "Equity/exposure milega" (−5)</label>
+        <label><input type="checkbox" data-points="-2"> Sirf email, no phone, no business name (−2)</label>
+      </div>
+      <div class="score">
+        <div class="val" id="scoreVal">0</div>
+        <div class="verdict" id="scoreVerdict">Tick karo — verdict yahan aayega</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section id="price">
+    <h2><span class="n">8</span>Pricing frame (India, 2026)</h2>
+    <p class="lead">"Website kitne ki?" ka seedha jawab mat do. Poochho: "Website se kya hona chahiye — call, form, ya online order?" Jawab se price khud set ho jaata hai.</p>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Package</th><th>Price</th><th>Includes</th></tr></thead>
+        <tbody>
+          <tr><td><b>Starter</b> (5 pages)</td><td>₹8,000–15,000</td><td>Home/About/Services/Contact, mobile-friendly, WhatsApp, Maps, basic SEO</td></tr>
+          <tr><td><b>Business Pro</b></td><td>₹25,000–50,000</td><td>Custom design, booking/enquiry system, blog, speed + SEO, Google Business Profile</td></tr>
+          <tr><td><b>E-commerce</b></td><td>₹50,000–1,50,000</td><td>Catalogue, cart, UPI/card, delivery, admin panel</td></tr>
+          <tr><td><b>Matrimonial / community portal</b></td><td>₹60,000–1,50,000</td><td>Profiles, search/filter, chat/interest, admin + moderation <span class="tag t-new">aapka codebase</span></td></tr>
+          <tr><td><b>Maintenance</b></td><td>₹5,000–10,000/month</td><td>Updates, backup, security, 2 changes free</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout warn">Payment: <b>40–50% advance</b>. Domain/hosting client ke naam par. Advance ke bina kaam shuru mat karo — chahe client kitna hi bada ho.</div>
+  </section>
+
+  <!-- 9 -->
+  <section id="flags">
+    <h2><span class="n">9</span>Red flags</h2>
+    <div class="grid g2">
+      <div class="card"><h3>🚩 Platform ke bahar WhatsApp</h3><p>Freelancer par client bolta hai "WhatsApp karo" → account ban + payment scam. Platform ke andar hi rakho.</p></div>
+      <div class="card"><h3>🚩 "Pehle free demo banao"</h3><p>Max 1 screenshot ya 1-page mockup. Poori site free mein kabhi nahi.</p></div>
+      <div class="card"><h3>🚩 "Payment baad mein, trust karo"</h3><p>Escrow ya advance. Warna kaam nahi. Simple.</p></div>
+      <div class="card"><h3>🚩 "Guaranteed #1 on Google"</h3><p>Kabhi promise mat karo. SEO time leta hai — process batao, rank guarantee nahi.</p></div>
+    </div>
+  </section>
+
+  <footer>
+    <b>Files:</b> <code>leads/website-dev-lead-kit.md</code> (full playbook) · <code>leads/lead-tracker.csv</code> (pipeline) · <code>leads/lead-kit.html</code> (ye page).<br>
+    Freelancer listings 21 Oct 2026 ko verify kiye gaye. LinkedIn/Facebook/Reddit login-gated hain — isliye unke liye search links diye hain, jo aapke login se fresh results dikhate hain. Bid karne se pehle har project ka status confirm karo.
+  </footer>
+</div>
+
+<script>
+  document.querySelectorAll('button.copy').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var text = btn.getAttribute('data-v').replace(/\\n/g, '\n');
+      var done = function () {
+        var old = btn.textContent;
+        btn.textContent = 'Copied ✓';
+        btn.classList.add('done');
+        setTimeout(function () { btn.textContent = old; btn.classList.remove('done'); }, 1400);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done).catch(function () { fallback(text, done); });
+      } else { fallback(text, done); }
+    });
+  });
+  function fallback(text, cb) {
+    var ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); cb(); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('#calcBody input'));
+  function updateScore() {
+    var score = boxes.reduce(function (sum, b) { return sum + (b.checked ? Number(b.getAttribute('data-points')) : 0); }, 0);
+    document.getElementById('scoreVal').textContent = score;
+    var v = document.getElementById('scoreVerdict');
+    var val = document.getElementById('scoreVal');
+    if (score >= 8) { v.innerHTML = '<b style="color:var(--hot)">HOT — aaj hi call karo</b><br>Iska demo banake bhejo.'; val.style.color = 'var(--hot)'; }
+    else if (score >= 5) { v.innerHTML = '<b style="color:var(--warm)">WARM — WhatsApp + follow-up</b><br>Day 3 aur day 7 pe follow-up.'; val.style.color = 'var(--warm)'; }
+    else { v.innerHTML = '<b style="color:#9bb0cc">COLD — chhod do</b><br>Time better leads pe lagao.'; val.style.color = '#9bb0cc'; }
+  }
+  boxes.forEach(function (b) { b.addEventListener('change', updateScore); });
+  updateScore();
+</script>
+</body>
+</html>
